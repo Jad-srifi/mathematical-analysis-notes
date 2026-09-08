@@ -1,0 +1,52 @@
+\subsection{Connectedness, Path-Connectedness, and the Preservation of Topological Properties}
+
+Unlike compactness, which relates to bounding and covering, connectedness describes the structural indivisibility of a space. We define this property negatively, via the inability to separate the space into disjoint open components.
+
+\begin{definition}
+A metric space $(X, d)$ is \textbf{disconnected} if there exist two non-empty, disjoint open sets $U, V \subset X$ such that $X = U \cup V$. The space $(X, d)$ is \textbf{connected} if it is not disconnected. A subset $E \subset X$ is connected if it is connected as a metric subspace under the inherited metric.
+\end{definition}
+
+A more intuitive, kinesthetic notion of connectedness relies on the existence of continuous paths between any two points. 
+
+\begin{definition}
+A metric space $(X, d)$ is \textbf{path-connected} if for every pair of points $x, y \in X$, there exists a continuous function $\gamma: [0, 1] \to X$ such that $\gamma(0) = x$ and $\gamma(1) = y$.
+\end{definition}
+
+\begin{theorem}
+Every path-connected metric space $(X, d)$ is connected.
+\end{theorem}
+
+\begin{proof}
+We proceed by contradiction. Assume $(X, d)$ is path-connected but disconnected. By definition, there exist non-empty, disjoint open sets $U$ and $V$ such that $X = U \cup V$. Because $U$ and $V$ are non-empty, we can choose points $x \in U$ and $y \in V$. 
+
+Since $X$ is path-connected, there exists a continuous path $\gamma: [0, 1] \to X$ such that $\gamma(0) = x$ and $\gamma(1) = y$. Consider the preimages of $U$ and $V$ under $\gamma$:
+$$ A = \gamma^{-1}(U) = \{ t \in [0, 1] \mid \gamma(t) \in U \} $$
+$$ B = \gamma^{-1}(V) = \{ t \in [0, 1] \mid \gamma(t) \in V \} $$
+Because $\gamma$ is a continuous mapping, the preimages of open sets are open in the relative topology of $[0, 1]$. Thus, $A$ and $B$ are open subsets of $[0, 1]$. 
+Furthermore, $0 \in A$ (since $\gamma(0) = x \in U$) and $1 \in B$ (since $\gamma(1) = y \in V$), making both sets non-empty. Since $U \cap V = \emptyset$, it strictly follows that $A \cap B = \emptyset$. Finally, because $X = U \cup V$, every $t \in [0, 1]$ maps into either $U$ or $V$, meaning $A \cup B = [0, 1]$.
+
+This implies that $[0, 1]$ is the union of two non-empty, disjoint open sets $A$ and $B$, which means $[0, 1]$ is disconnected. However, the interval $[0, 1] \subset \mathbb{R}$ is fundamentally connected (a direct consequence of the Completeness Axiom established in Chapter 1). This contradiction forces us to conclude that $X$ must be connected.
+\end{proof}
+
+The power of topological invariants lies in their preservation under continuous mappings. Connectedness is perfectly preserved, which immediately yields the generalized Intermediate Value Theorem.
+
+\begin{theorem}[Preservation of Connectedness]
+Let $(X, d_X)$ and $(Y, d_Y)$ be metric spaces, and let $f: X \to Y$ be a continuous function. If $X$ is connected, then the image $f(X)$ is connected in $Y$.
+\end{theorem}
+
+\begin{proof}
+Suppose, for the sake of contradiction, that $f(X)$ is disconnected. Then there exist open sets $U_Y$ and $V_Y$ in $Y$ such that $U = U_Y \cap f(X)$ and $V = V_Y \cap f(X)$ are non-empty, disjoint open sets in the subspace topology of $f(X)$, and $f(X) = U \cup V$.
+
+Consider the preimages in $X$:
+$$ A = f^{-1}(U) \quad \text{and} \quad B = f^{-1}(V) $$
+Because $f$ is continuous, $A$ and $B$ are open in $X$. Since $U$ and $V$ are non-empty and contained in the image of $f$, both $A$ and $B$ are non-empty. Because $U \cap V = \emptyset$, a single point in $X$ cannot map to both $U$ and $V$, rendering $A \cap B = \emptyset$. Lastly, because $f(X) = U \cup V$, every point in $X$ maps to either $U$ or $V$, so $X = A \cup B$.
+This constitutes a disconnection of $X$, contradicting the hypothesis that $X$ is connected. Thus, $f(X)$ must be connected.
+\end{proof}
+
+\begin{theorem}[Generalized Intermediate Value Theorem]
+Let $(X, d)$ be a connected metric space, and let $f: X \to \mathbb{R}$ be continuous. If $a, b \in X$ such that $f(a) < f(b)$, then for every real number $c$ satisfying $f(a) < c < f(b)$, there exists a point $x \in X$ such that $f(x) = c$.
+\end{theorem}
+
+\begin{proof}
+By Theorem 4.3.2, the image $f(X) \subset \mathbb{R}$ is connected. The only connected subsets of the real line are intervals (rays, segments, or $\mathbb{R}$ itself). Since $f(a) \in f(X)$ and $f(b) \in f(X)$, the entire segment $[f(a), f(b)]$ must be contained within the interval $f(X)$. Because $c \in [f(a), f(b)]$, it follows that $c \in f(X)$. By the definition of the image, there exists at least one $x \in X$ such that $f(x) = c$.
+\end{proof}

@@ -1,0 +1,57 @@
+\subsection{Compactness Variants: Total Boundedness, Sequential Compactness, and the Ascoli-Arzel\à Theorem}
+
+In the standard topology of $\mathbb{R}^n$, the Heine-Borel theorem establishes that a set is compact if and only if it is closed and bounded. However, in arbitrary metric spaces, mere boundedness is insufficient to guarantee compactness. We must introduce a stricter geometric constraint.
+
+\begin{definition}
+A metric space $(X, d)$ is \textbf{totally bounded} if for every $\epsilon > 0$, there exists a finite set of points $\{x_1, x_2, \dots, x_n\} \subset X$ (an $\epsilon$-net) such that $X = \bigcup_{i=1}^n B_\epsilon(x_i)$.
+\end{definition}
+
+\begin{definition}
+A metric space $(X, d)$ is \textbf{sequentially compact} if every sequence $(x_n)_{n=1}^\infty$ in $X$ possesses a convergent subsequence whose limit lies in $X$.
+\end{definition}
+
+\begin{theorem}
+If a metric space $(X, d)$ is sequentially compact, then it is totally bounded.
+\end{theorem}
+
+\begin{proof}
+We proceed by contradiction. Assume $(X, d)$ is sequentially compact but not totally bounded. Then there exists some $\epsilon_0 > 0$ for which no finite $\epsilon_0$-net can cover $X$. 
+
+We construct a sequence $(x_n)$ recursively. Choose $x_1 \in X$ arbitrarily. Because the single ball $B_{\epsilon_0}(x_1)$ cannot cover $X$, there exists $x_2 \in X \setminus B_{\epsilon_0}(x_1)$. This implies $d(x_1, x_2) \ge \epsilon_0$. 
+Inductively, suppose we have chosen points $\{x_1, \dots, x_k\}$ such that $d(x_i, x_j) \ge \epsilon_0$ for all $i \neq j$. Because no finite union of $\epsilon_0$-balls covers $X$, the set $X \setminus \bigcup_{i=1}^k B_{\epsilon_0}(x_i)$ is non-empty. We select $x_{k+1}$ from this complement, ensuring $d(x_{k+1}, x_i) \ge \epsilon_0$ for all $1 \le i \le k$.
+
+This process yields an infinite sequence $(x_n)_{n=1}^\infty$ satisfying $d(x_n, x_m) \ge \epsilon_0$ for all $n \neq m$. Consequently, no subsequence can be a Cauchy sequence, as the distance between any two distinct terms is bounded below by $\epsilon_0$. Since every convergent sequence must be Cauchy, $(x_n)$ admits no convergent subsequence. This directly contradicts the premise that $X$ is sequentially compact. Therefore, $X$ must be totally bounded.
+\end{proof}
+
+A central application of these metric space topologies lies in the analysis of function spaces. Let $K$ be a compact metric space, and let $C(K)$ denote the Banach space of continuous real-valued functions on $K$, equipped with the supremum norm $\|f\|_\infty = \sup_{x \in K} |f(x)|$. To determine when a sequence of functions in $C(K)$ admits a uniformly convergent subsequence, we require the notions of uniform boundedness and equicontinuity.
+
+\begin{definition}
+A family of functions $\mathcal{F} \subset C(K)$ is \textbf{uniformly bounded} if there exists $M > 0$ such that $|f(x)| \le M$ for all $f \in \mathcal{F}$ and all $x \in K$. 
+The family $\mathcal{F}$ is \textbf{equicontinuous} if for every $\epsilon > 0$, there exists a $\delta > 0$ such that for all $x, y \in K$ with $d(x, y) < \delta$, we have $|f(x) - f(y)| < \epsilon$ for all $f \in \mathcal{F}$.
+\end{definition}
+
+\begin{theorem}[Ascoli-Arzel\à Theorem - Sufficiency]
+Let $K$ be a compact metric space. If a sequence of functions $(f_n)_{n=1}^\infty$ in $C(K)$ is uniformly bounded and equicontinuous, then it contains a uniformly convergent subsequence.
+\end{theorem}
+
+\begin{proof}
+Because $K$ is compact, it is totally bounded and thus separable; it possesses a countable dense subset $D = \{x_1, x_2, \dots\}$. 
+
+We employ Cantor's diagonal argument. Because the sequence is uniformly bounded, the sequence of real numbers $(f_n(x_1))$ is bounded. By the Bolzano-Weierstrass theorem, it has a convergent subsequence, which we index as $(f_{1, k})_{k=1}^\infty$.
+Next, the sequence $(f_{1, k}(x_2))$ is a bounded real sequence, yielding a convergent subsequence $(f_{2, k})_{k=1}^\infty$. 
+Proceeding inductively, we construct nested subsequences $(f_{m, k})_{k=1}^\infty$ such that the $m$-th subsequence converges at the point $x_m$. 
+
+We extract the diagonal sequence $g_k = f_{k, k}$. For any fixed $m$, $(g_k)_{k \ge m}$ is a subsequence of $(f_{m, k})_{k=1}^\infty$. Therefore, the sequence $(g_k)$ converges pointwise at every $x \in D$.
+
+We now prove that $(g_k)$ is uniformly Cauchy on $K$. Let $\epsilon > 0$. By the equicontinuity of the original sequence, there exists $\delta > 0$ such that $d(x, y) < \delta \implies |g_k(x) - g_k(y)| < \frac{\epsilon}{3}$ for all $k \in \mathbb{N}$ and $x, y \in K$.
+Because $K$ is compact, it is totally bounded. The open balls $\{B_\delta(x_i)\}_{x_i \in D}$ cover $K$, so we can extract a finite subcover corresponding to points $\{p_1, \dots, p_r\} \subset D$.
+
+Since $(g_k)$ converges at each $p_i$, it is a Cauchy sequence at each of these finitely many points. Thus, there exists an $N \in \mathbb{N}$ such that for all $m, k \ge N$ and all $1 \le i \le r$:
+$$ |g_k(p_i) - g_m(p_i)| < \frac{\epsilon}{3} $$
+
+Let $x \in K$ be arbitrary. The point $x$ must lie in $B_\delta(p_i)$ for some $1 \le i \le r$. For $m, k \ge N$, we apply the triangle inequality:
+$$ |g_k(x) - g_m(x)| \le |g_k(x) - g_k(p_i)| + |g_k(p_i) - g_m(p_i)| + |g_m(p_i) - g_m(x)| $$
+Since $d(x, p_i) < \delta$, equicontinuity strictly bounds the first and third terms by $\frac{\epsilon}{3}$. The middle term is bounded by $\frac{\epsilon}{3}$ due to the pointwise Cauchy convergence at $p_i$. Therefore:
+$$ |g_k(x) - g_m(x)| < \frac{\epsilon}{3} + \frac{\epsilon}{3} + \frac{\epsilon}{3} = \epsilon $$
+Since this bound is independent of $x$, $(g_k)$ is uniformly Cauchy. Because $C(K)$ is complete under the supremum norm, $(g_k)$ converges uniformly on $K$.
+\end{proof}
