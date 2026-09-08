@@ -1,7 +1,7 @@
 # Foundations of Real Analysis & Spectral Linear Algebra
 
 **Author:** Mohamed Jad Srifi  
-**Scope:** 25-Page Self-Directed Theoretical Mathematics Monograph  
+**Scope:** 25+ Page Self-Directed Theoretical Mathematics Monograph  
 **Deliverable:** [`real-analysis-linear-algebra.pdf`](./real-analysis-linear-algebra.pdf)
 
 ## Overview
@@ -41,7 +41,7 @@ Every theorem and lemma is proven from first principles with full analytical rig
 ---
 
 ## Compilation Instructions
-To build the 25-page document from the raw LaTeX sources:
+To build the 25+ page document from the raw LaTeX sources:
 
 ```bash
 git clone [https://github.com/Jad-srifi/mathematical-analysis-notes.git](https://github.com/Jad-srifi/mathematical-analysis-notes.git)
