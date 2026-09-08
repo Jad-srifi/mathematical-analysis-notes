@@ -27,7 +27,17 @@ Every theorem and lemma is proven from first principles with full analytical rig
 * **Operator Spaces:** Vector spaces over $\mathbb{R}$ and $\mathbb{C}$, invariant subspaces, and the Rank-Nullity Theorem.
 * **Spectral Decomposition:** Self-adjoint operators, inner product geometry, and the complete proof of the Spectral Theorem for symmetric/Hermitian matrices.
 * **Singular Value Decomposition (SVD):** Orthogonal diagonalization, geometric projections, and matrix 2-norm bounds.
+  
+### [Chapter 4: Metric Spaces & General Topology (pp. 26–33)](#)
+* **Metric Spaces & Completeness:** Open/closed sets in arbitrary metric topologies, Banach spaces, and the Banach Fixed-Point Theorem via Picard iteration.
+* **Compactness Variants:** Total boundedness, sequential compactness, uniform boundedness, equicontinuity, and the Ascoli-Arzelà Theorem for function spaces.
+* **Connectedness:** Path-connectedness, preservation of topological invariants under continuous mappings, and the Generalized Intermediate Value Theorem.
 
+### [Chapter 5: Complex Analysis & Contour Integration (pp. 34–41)](#)  
+* **Complex Differentiability:** Holomorphic functions, the Cauchy-Riemann equations, and the rigid analytic structure of $\mathbb{C}$.
+* **Contour Integration:** Cauchy's Integral Theorem (via Green's Theorem), Cauchy's Integral Formula, Morera's Theorem, and Liouville's Theorem.
+* **Singularities & Residues:** Laurent series expansions, classification of isolated singularities, Cauchy's Residue Theorem, and the rigorous evaluation of real improper integrals.
+  
 ---
 
 ## Compilation Instructions
