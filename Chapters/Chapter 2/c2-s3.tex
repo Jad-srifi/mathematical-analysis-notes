@@ -1,0 +1,93 @@
+\subsection{Sequences and Series of Functions: Pointwise vs. Uniform Convergence}
+
+The transition from analyzing individual functions to sequences of functions $(f_n)_{n=1}^\infty$ requires a careful distinction between local limits and global limits. The mode of convergence dictates which analytic properties—such as continuity, differentiability, and integrability—are preserved in the limit function.
+
+\begin{definition}
+Let $E \subset \mathbb{R}$, and let $(f_n)_{n=1}^\infty$ be a sequence of functions defined on $E$. We say that $(f_n)$ \textbf{converges pointwise} to a function $f: E \to \mathbb{R}$ if, for every $x \in E$ and every $\epsilon > 0$, there exists an integer $N \in \mathbb{N}$ (dependent on both $x$ and $\epsilon$) such that for all $n \ge N$,
+\[
+|f_n(x) - f(x)| < \epsilon
+\]
+\end{definition}
+
+Pointwise convergence is often too weak to preserve analytic properties; a limit of continuous functions may be entirely discontinuous. To guarantee the preservation of continuity, we require a stronger, global form of convergence.
+
+\begin{definition}
+A sequence of functions $(f_n)_{n=1}^\infty$ \textbf{converges uniformly} to $f$ on $E$ if, for every $\epsilon > 0$, there exists an integer $N \in \mathbb{N}$ (dependent only on $\epsilon$) such that for all $n \ge N$ and all $x \in E$,
+\[
+|f_n(x) - f(x)| < \epsilon
+\]
+\end{definition}
+
+\begin{theorem}[Uniform Convergence and Continuity]
+Let $(f_n)$ be a sequence of continuous functions on $E \subset \mathbb{R}$. If $(f_n)$ converges uniformly to $f$ on $E$, then $f$ is continuous on $E$.
+\end{theorem}
+
+\begin{proof}
+Let $c \in E$ and let $\epsilon > 0$ be given. We must find a $\delta > 0$ such that for all $x \in E$ with $|x - c| < \delta$, we have $|f(x) - f(c)| < \epsilon$.
+
+By the uniform convergence of $(f_n)$, there exists $N \in \mathbb{N}$ such that for all $x \in E$,
+\[
+|f_N(x) - f(x)| < \frac{\epsilon}{3}
+\]
+Because $f_N$ is continuous at $c$, there exists a $\delta > 0$ such that for all $x \in E$ satisfying $|x - c| < \delta$,
+\[
+|f_N(x) - f_N(c)| < \frac{\epsilon}{3}
+\]
+We apply the triangle inequality to bound the difference $|f(x) - f(c)|$ for any $x \in E$ strictly within $\delta$ of $c$:
+\[
+|f(x) - f(c)| \le |f(x) - f_N(x)| + |f_N(x) - f_N(c)| + |f_N(c) - f(c)|
+\]
+Substituting our bounds yields:
+\[
+|f(x) - f(c)| < \frac{\epsilon}{3} + \frac{\epsilon}{3} + \frac{\epsilon}{3} = \epsilon
+\]
+Thus, $f$ is continuous at $c$. Since $c$ was arbitrary, $f$ is continuous on the entirety of $E$.
+\end{proof}
+
+When analyzing infinite series of functions, $\sum_{n=1}^\infty f_n(x)$, uniform convergence is most efficiently established via a bounding criterion over the summands.
+
+\begin{theorem}[Weierstrass M-Test]
+Let $(f_n)$ be a sequence of functions defined on $E$, and suppose there exists a sequence of real numbers $(M_n)$ such that $|f_n(x)| \le M_n$ for all $x \in E$ and all $n \in \mathbb{N}$. If the infinite series $\sum_{n=1}^\infty M_n$ converges, then the series $\sum_{n=1}^\infty f_n(x)$ converges uniformly on $E$.
+\end{theorem}
+
+\begin{proof}
+Let $S_k(x) = \sum_{n=1}^k f_n(x)$ denote the sequence of partial sums. We will show that $(S_k)$ satisfies the uniform Cauchy criterion. Let $\epsilon > 0$. Because $\sum_{n=1}^\infty M_n$ converges, the sequence of its partial sums is Cauchy. Thus, there exists an $N \in \mathbb{N}$ such that for all $m > k \ge N$,
+\[
+\sum_{n=k+1}^m M_n < \epsilon
+\]
+For any $x \in E$ and for $m > k \ge N$, the triangle inequality implies:
+\[
+|S_m(x) - S_k(x)| = \left| \sum_{n=k+1}^m f_n(x) \right| \le \sum_{n=k+1}^m |f_n(x)| \le \sum_{n=k+1}^m M_n < \epsilon
+\]
+Since $N$ depends strictly on $\epsilon$ and is entirely independent of $x$, the sequence of partial sums $(S_k)$ is uniformly Cauchy. Therefore, the series converges uniformly to a limit function on $E$.
+\end{proof}
+
+\begin{theorem}[Integration of Uniformly Convergent Sequences]
+Let $\alpha$ be monotonically increasing on $[a, b]$. Suppose $f_n \in \mathcal{R}(\alpha)$ on $[a, b]$ for $n=1, 2, \dots$, and suppose $f_n \to f$ uniformly on $[a, b]$. Then $f \in \mathcal{R}(\alpha)$ on $[a, b]$, and:
+\[
+\int_a^b f \, d\alpha = \lim_{n \to \infty} \int_a^b f_n \, d\alpha
+\]
+\end{theorem}
+
+\begin{proof}
+Let $\epsilon > 0$. Choose a constant $\epsilon_0 > 0$ such that $\epsilon_0 (\alpha(b) - \alpha(a)) < \frac{\epsilon}{3}$. By the definition of uniform convergence, there exists $N \in \mathbb{N}$ such that for all $n \ge N$ and $x \in [a, b]$,
+\[
+f_n(x) - \epsilon_0 < f(x) < f_n(x) + \epsilon_0
+\]
+This strict bounding implies that for the upper and lower Darboux-Stieltjes integrals:
+\[
+\overline{\int} f \, d\alpha \le \overline{\int} (f_n + \epsilon_0) \, d\alpha = \int_a^b f_n \, d\alpha + \epsilon_0 (\alpha(b) - \alpha(a))
+\]
+\[
+\underline{\int} f \, d\alpha \ge \underline{\int} (f_n - \epsilon_0) \, d\alpha = \int_a^b f_n \, d\alpha - \epsilon_0 (\alpha(b) - \alpha(a))
+\]
+Therefore, the difference between the upper and lower integrals of $f$ is strictly bounded by:
+\[
+0 \le \overline{\int} f \, d\alpha - \underline{\int} f \, d\alpha \le 2\epsilon_0 (\alpha(b) - \alpha(a)) < \frac{2\epsilon}{3} < \epsilon
+\]
+Since $\epsilon$ was arbitrary, the upper and lower integrals coincide: $\overline{\int} f \, d\alpha = \underline{\int} f \, d\alpha$, proving $f \in \mathcal{R}(\alpha)$. Furthermore, evaluating the difference of the integrals for $n \ge N$ gives:
+\[
+\left| \int_a^b f \, d\alpha - \int_a^b f_n \, d\alpha \right| = \left| \int_a^b (f - f_n) \, d\alpha \right| \le \int_a^b |f - f_n| \, d\alpha \le \epsilon_0 (\alpha(b) - \alpha(a)) < \epsilon
+\]
+This proves that the sequence of integrals converges to the integral of the limit function.
+\end{proof}

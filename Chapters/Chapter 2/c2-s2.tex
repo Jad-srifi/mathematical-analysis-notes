@@ -1,0 +1,98 @@
+\subsection{Riemann-Stieltjes Integrability Criteria and Measure-Zero Discontinuities}
+
+We generalize the classical Riemann integral by integrating a function $f$ with respect to a monotonically increasing function $\alpha$. This Riemann-Stieltjes framework provides the theoretical foundation for probability theory and unified functional analysis.
+
+\begin{definition}
+Let $[a, b]$ be a closed interval. A \textbf{partition} $P$ of $[a, b]$ is a finite set of points $P = \{x_0, x_1, \dots, x_n\}$ such that $a = x_0 < x_1 < \dots < x_n = b$. We define $\Delta \alpha_i = \alpha(x_i) - \alpha(x_{i-1})$. For a bounded function $f: [a, b] \to \mathbb{R}$, we define the upper and lower Darboux-Stieltjes sums with respect to $P$ and $\alpha$ as:
+\[
+U(P, f, \alpha) = \sum_{i=1}^n M_i \Delta \alpha_i, \quad L(P, f, \alpha) = \sum_{i=1}^n m_i \Delta \alpha_i
+\]
+where $M_i = \sup_{x \in [x_{i-1}, x_i]} f(x)$ and $m_i = \inf_{x \in [x_{i-1}, x_i]} f(x)$.
+\end{definition}
+
+We define the upper and lower integrals as the infimum and supremum of these sums over all possible partitions, respectively. If these two values coincide, we say $f$ is Riemann-Stieltjes integrable with respect to $\alpha$, denoted $f \in \mathcal{R}(\alpha)$.
+
+\begin{theorem}[Cauchy Criterion for Integrability]
+Let $f$ be bounded on $[a, b]$, and let $\alpha$ be monotonically increasing. Then $f \in \mathcal{R}(\alpha)$ if and only if for every $\epsilon > 0$, there exists a partition $P$ such that:
+\[
+U(P, f, \alpha) - L(P, f, \alpha) < \epsilon
+\]
+\end{theorem}
+
+\begin{proof}
+$(\impliedby)$ Assume that for every $\epsilon > 0$, there exists a partition $P$ satisfying the inequality. By definition, the upper integral $\overline{\int} f \, d\alpha$ and lower integral $\underline{\int} f \, d\alpha$ satisfy:
+\[
+L(P, f, \alpha) \le \underline{\int} f \, d\alpha \le \overline{\int} f \, d\alpha \le U(P, f, \alpha)
+\]
+Thus, we have:
+\[
+0 \le \overline{\int} f \, d\alpha - \underline{\int} f \, d\alpha \le U(P, f, \alpha) - L(P, f, \alpha) < \epsilon
+\]
+Since this holds for all $\epsilon > 0$, the upper and lower integrals must be equal, proving $f \in \mathcal{R}(\alpha)$.
+
+$(\implies)$ Assume $f \in \mathcal{R}(\alpha)$, and let $I = \int f \, d\alpha$. Let $\epsilon > 0$. By the definitions of the supremum and infimum, there exist partitions $P_1$ and $P_2$ such that:
+\[
+U(P_1, f, \alpha) < I + \frac{\epsilon}{2} \quad \text{and} \quad L(P_2, f, \alpha) > I - \frac{\epsilon}{2}
+\]
+Let $P = P_1 \cup P_2$ be the common refinement. Because refining a partition can only decrease upper sums and increase lower sums, we have:
+\[
+U(P, f, \alpha) \le U(P_1, f, \alpha) < I + \frac{\epsilon}{2}
+\]
+\[
+L(P, f, \alpha) \ge L(P_2, f, \alpha) > I - \frac{\epsilon}{2}
+\]
+Subtracting the lower sum inequality from the upper sum inequality yields:
+\[
+U(P, f, \alpha) - L(P, f, \alpha) < \left(I + \frac{\epsilon}{2}\right) - \left(I - \frac{\epsilon}{2}\right) = \epsilon
+\]
+\end{proof}
+
+To characterize precisely which functions are integrable, we must analyze their points of discontinuity. For the standard Riemann integral where $\alpha(x) = x$, Lebesgue provided an exact characterization using the concept of measure zero.
+
+\begin{definition}
+A set $E \subset \mathbb{R}$ has \textbf{Lebesgue measure zero} if for every $\epsilon > 0$, there exists a countable collection of open intervals $\{(a_k, b_k)\}_{k=1}^\infty$ such that $E \subset \bigcup_{k=1}^\infty (a_k, b_k)$ and $\sum_{k=1}^\infty (b_k - a_k) < \epsilon$.
+\end{definition}
+
+\begin{definition}
+The \textbf{oscillation} of a bounded function $f$ on an interval $J$ is $\omega_f(J) = \sup_J f - \inf_J f$. The oscillation of $f$ at a point $x$ is defined as $\omega_f(x) = \lim_{\delta \to 0} \omega_f((x - \delta, x + \delta))$. 
+\end{definition}
+
+It is a standard topological result that $f$ is continuous at $x$ if and only if $\omega_f(x) = 0$. Furthermore, for any $\eta > 0$, the set of points $D_\eta = \{ x \in [a, b] \mid \omega_f(x) \ge \eta \}$ is closed.
+
+\begin{theorem}[Lebesgue's Criterion - Sufficiency]
+Let $f: [a, b] \to \mathbb{R}$ be bounded. If the set $D$ of discontinuities of $f$ has Lebesgue measure zero, then $f$ is Riemann integrable on $[a, b]$.
+\end{theorem}
+
+\begin{proof}
+Let $M = \sup_{x \in [a, b]} |f(x)|$. If $M = 0$, $f$ is identically zero and trivially integrable. Assume $M > 0$. Let $\epsilon > 0$ be given. We must construct a partition $P$ such that $U(P, f) - L(P, f) < \epsilon$.
+
+Let $\eta = \frac{\epsilon}{2(b - a)}$. Consider the set $D_\eta = \{ x \in [a, b] \mid \omega_f(x) \ge \eta \}$. Because $D_\eta$ is a closed subset of the compact interval $[a, b]$, $D_\eta$ is compact. Furthermore, since $D_\eta \subset D$ and $D$ has measure zero, $D_\eta$ also has measure zero. 
+
+Therefore, there exists a countable collection of open intervals covering $D_\eta$ with total length strictly less than $\frac{\epsilon}{4M}$. Because $D_\eta$ is compact, we can extract a finite subcover $\mathcal{V} = \{V_1, \dots, V_k\}$. Let $V = \bigcup_{i=1}^k V_i$. The sum of the lengths of the intervals in $\mathcal{V}$ is also less than $\frac{\epsilon}{4M}$.
+
+Now consider the set $K = [a, b] \setminus V$. Since $V$ is open, $K$ is closed and bounded, thus compact. For every $x \in K$, we have $x \notin D_\eta$, which means $\omega_f(x) < \eta$. By the definition of oscillation at a point, there exists an open interval $U_x$ containing $x$ such that $\omega_f(U_x) < \eta$. The collection $\{U_x\}_{x \in K}$ forms an open cover of the compact set $K$. Thus, there exists a finite subcover $\mathcal{U} = \{U_{x_1}, \dots, U_{x_m}\}$.
+
+The endpoints of the intervals in the finite covers $\mathcal{V}$ and $\mathcal{U}$ that intersect $[a, b]$ define a partition $P = \{t_0, t_1, \dots, t_N\}$ of $[a, b]$. We separate the subintervals $[t_{j-1}, t_j]$ into two disjoint classes:
+\begin{enumerate}
+    \item Class $\mathcal{A}$ contains those subintervals that intersect $D_\eta$. By construction, these are entirely contained within $V$.
+    \item Class $\mathcal{B}$ contains all remaining subintervals. These do not intersect $D_\eta$, and are entirely contained within some interval from $\mathcal{U}$.
+\end{enumerate}
+
+We now bound the difference between the upper and lower sums:
+\[
+U(P, f) - L(P, f) = \sum_{j=1}^N (M_j - m_j) \Delta t_j = \sum_{j \in \mathcal{A}} (M_j - m_j) \Delta t_j + \sum_{j \in \mathcal{B}} (M_j - m_j) \Delta t_j
+\]
+For subintervals in Class $\mathcal{A}$, the maximum difference $M_j - m_j$ is bounded trivially by $2M$. The sum of their lengths $\Delta t_j$ is bounded by the total length of $\mathcal{V}$, which is less than $\frac{\epsilon}{4M}$. Thus:
+\[
+\sum_{j \in \mathcal{A}} (M_j - m_j) \Delta t_j \le 2M \sum_{j \in \mathcal{A}} \Delta t_j < 2M \left( \frac{\epsilon}{4M} \right) = \frac{\epsilon}{2}
+\]
+For subintervals in Class $\mathcal{B}$, each is contained in an interval where the oscillation is strictly less than $\eta$. Hence, $M_j - m_j < \eta$. The sum of their lengths is bounded by the total length of $[a, b]$, which is $b - a$. Thus:
+\[
+\sum_{j \in \mathcal{B}} (M_j - m_j) \Delta t_j < \eta \sum_{j \in \mathcal{B}} \Delta t_j \le \eta (b - a) = \frac{\epsilon}{2(b - a)} (b - a) = \frac{\epsilon}{2}
+\]
+Adding the contributions from both classes yields:
+\[
+U(P, f) - L(P, f) < \frac{\epsilon}{2} + \frac{\epsilon}{2} = \epsilon
+\]
+By the Cauchy criterion, $f$ is Riemann integrable on $[a, b]$.
+\end{proof}
