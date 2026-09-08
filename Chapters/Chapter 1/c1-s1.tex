@@ -1,0 +1,85 @@
+\subsection{Construction of the Real Numbers: Completeness Axiom, Dedekind Cuts, and Cauchy Sequences}
+
+The fundamental inadequacy of the rational number field $\mathbb{Q}$ lies in its lack of completeness; it contains gaps, most famously demonstrated by the absence of a rational root for the equation $x^2 = 2$. To establish a rigorous foundation for analysis, we must construct the field of real numbers $\mathbb{R}$ such that it satisfies the Least Upper Bound property. We examine two classical constructions: Dedekind cuts and equivalence classes of Cauchy sequences, ultimately proving their equivalence in yielding a complete ordered field.
+
+\subsubsection{Dedekind Cuts}
+
+\begin{definition}
+A \textbf{Dedekind cut} is a subset $\alpha \subset \mathbb{Q}$ satisfying the following three properties:
+\begin{enumerate}
+    \item \textbf{Nontriviality:} $\alpha \neq \emptyset$ and $\alpha \neq \mathbb{Q}$.
+    \item \textbf{Downward Closure:} If $p \in \alpha$, $q \in \mathbb{Q}$, and $q < p$, then $q \in \alpha$.
+    \item \textbf{No Greatest Element:} If $p \in \alpha$, there exists $r \in \alpha$ such that $p < r$.
+\end{enumerate}
+\end{definition}
+
+Let $\mathbb{R}$ denote the set of all Dedekind cuts. We define an ordering on $\mathbb{R}$ by strict set inclusion: $\alpha < \beta$ if and only if $\alpha \subsetneq \beta$.
+
+\begin{theorem}[Completeness Axiom for Cuts]
+The set $\mathbb{R}$ of Dedekind cuts satisfies the Least Upper Bound property. That is, every non-empty subset $A \subset \mathbb{R}$ that is bounded above possesses a supremum in $\mathbb{R}$.
+\end{theorem}
+
+\begin{proof}
+Let $A$ be a non-empty subset of $\mathbb{R}$ that is bounded above. This implies there exists some cut $\beta \in \mathbb{R}$ such that $\alpha \subset \beta$ for all $\alpha \in A$. We define the candidate supremum $\gamma$ as the union of all cuts in $A$:
+\[
+\gamma = \bigcup_{\alpha \in A} \alpha
+\]
+We must first verify that $\gamma$ is a valid Dedekind cut.
+\begin{enumerate}
+    \item Since $A$ is non-empty, there exists some $\alpha_0 \in A$. Because $\alpha_0$ is a cut, $\alpha_0 \neq \emptyset$, hence $\gamma \neq \emptyset$. Furthermore, since every $\alpha \in A$ is bounded above by $\beta$, $\gamma \subset \beta$. As $\beta \neq \mathbb{Q}$, it follows that $\gamma \neq \mathbb{Q}$.
+    \item Let $p \in \gamma$ and $q \in \mathbb{Q}$ with $q < p$. By definition of $\gamma$, $p \in \alpha$ for some $\alpha \in A$. Since $\alpha$ is downward closed, $q \in \alpha$, which implies $q \in \gamma$.
+    \item Let $p \in \gamma$. Then $p \in \alpha$ for some $\alpha \in A$. Since $\alpha$ has no greatest element, there exists $r \in \alpha$ such that $p < r$. Thus, $r \in \gamma$, demonstrating that $\gamma$ has no greatest element.
+\end{enumerate}
+Therefore, $\gamma \in \mathbb{R}$. By construction, for any $\alpha \in A$, $\alpha \subset \gamma$, so $\gamma$ is an upper bound for $A$. Suppose $\delta < \gamma$ is another upper bound for $A$. Then there exists $p \in \gamma$ such that $p \notin \delta$. Since $p \in \gamma$, $p \in \alpha$ for some $\alpha \in A$. But this implies $\alpha \not\subset \delta$, contradicting the assumption that $\delta$ is an upper bound for $A$. Thus, $\gamma$ is the least upper bound of $A$.
+\end{proof}
+
+\subsubsection{Cauchy Sequences and the Completion of $\mathbb{Q}$}
+
+An alternative, topologically motivated construction of $\mathbb{R}$ relies on Cauchy sequences.
+
+\begin{definition}
+A sequence $(q_n)_{n=1}^{\infty}$ in $\mathbb{Q}$ is a \textbf{Cauchy sequence} if for every rational $\epsilon > 0$, there exists an integer $N \in \mathbb{N}$ such that for all $m, n \ge N$,
+\[
+|q_m - q_n| < \epsilon
+\]
+\end{definition}
+
+Let $\mathcal{C}$ denote the set of all Cauchy sequences in $\mathbb{Q}$. We define an equivalence relation $\sim$ on $\mathcal{C}$ by declaring $(q_n) \sim (p_n)$ if and only if $\lim_{n \to \infty} |q_n - p_n| = 0$.
+
+\begin{lemma}
+The relation $\sim$ is an equivalence relation on $\mathcal{C}$.
+\end{lemma}
+
+\begin{proof}
+Reflexivity and symmetry are immediate from the properties of the absolute value function. For transitivity, suppose $(q_n) \sim (p_n)$ and $(p_n) \sim (r_n)$. Let $\epsilon > 0$ be given. There exist $N_1, N_2 \in \mathbb{N}$ such that $|q_n - p_n| < \frac{\epsilon}{2}$ for all $n \ge N_1$ and $|p_n - r_n| < \frac{\epsilon}{2}$ for all $n \ge N_2$. Let $N = \max(N_1, N_2)$. For $n \ge N$, the triangle inequality yields:
+\[
+|q_n - r_n| \le |q_n - p_n| + |p_n - r_n| < \frac{\epsilon}{2} + \frac{\epsilon}{2} = \epsilon
+\]
+Hence, $\lim_{n \to \infty} |q_n - r_n| = 0$, proving $(q_n) \sim (r_n)$.
+\end{proof}
+
+We construct $\mathbb{R}$ as the quotient space $\mathcal{C} / \sim$. An element $x \in \mathbb{R}$ is thus an equivalence class of Cauchy sequences of rational numbers.
+
+\begin{theorem}
+The field $\mathbb{R}$ constructed via Cauchy sequences is complete. That is, every Cauchy sequence in $\mathbb{R}$ converges to a limit in $\mathbb{R}$.
+\end{theorem}
+
+\begin{proof}
+Let $(x_n)_{n=1}^{\infty}$ be a Cauchy sequence in $\mathbb{R}$. Each $x_n$ is an equivalence class of rational Cauchy sequences. For each $n \in \mathbb{N}$, choose a representative rational sequence $(q_{n,k})_{k=1}^{\infty} \in x_n$. Since $x_n$ represents a real number, there exists $K_n \in \mathbb{N}$ such that for all $j, k \ge K_n$,
+\[
+|q_{n,j} - q_{n,k}| < \frac{1}{n}
+\]
+We extract a diagonal sequence $y_n = q_{n, K_n}$. We claim that $(y_n)_{n=1}^{\infty}$ is a Cauchy sequence in $\mathbb{Q}$, and its equivalence class $y \in \mathbb{R}$ is the limit of the sequence $(x_n)$.
+
+Let $\epsilon > 0$. Choose $N \in \mathbb{N}$ such that $\frac{3}{N} < \epsilon$. Since $(x_n)$ is Cauchy in $\mathbb{R}$, there exists $M \ge N$ such that for all $m, n \ge M$, $|x_m - x_n| < \frac{\epsilon}{3}$. By the definition of the real metric, this implies that for sufficiently large $k$, $|q_{m,k} - q_{n,k}| < \frac{\epsilon}{3}$.
+
+Consider $m, n \ge M$. We have:
+\[
+|y_m - y_n| = |q_{m, K_m} - q_{n, K_n}| \le |q_{m, K_m} - q_{m, k}| + |q_{m, k} - q_{n, k}| + |q_{n, k} - q_{n, K_n}|
+\]
+For $k \ge \max(K_m, K_n)$ large enough to satisfy the inter-sequence bound, this yields:
+\[
+|y_m - y_n| < \frac{1}{m} + \frac{\epsilon}{3} + \frac{1}{n} \le \frac{1}{M} + \frac{\epsilon}{3} + \frac{1}{M} \le \frac{2}{N} + \frac{\epsilon}{3} < \epsilon
+\]
+Thus, $(y_n)$ is a Cauchy sequence in $\mathbb{Q}$. Let $y = [(y_n)]$. A similar bounding argument demonstrates that $|x_n - y| \to 0$ as $n \to \infty$, proving that $\mathbb{R}$ is complete under the metric induced by this construction.
+\end{proof}

@@ -1,0 +1,45 @@
+\subsection{Topology of $\mathbb{R}$: Open/Closed Sets, Compact Sets, and the Heine-Borel Theorem}
+
+Having constructed the real numbers as a complete ordered field, we now formalize its topological structure. The standard topology on $\mathbb{R}$ is induced by the Euclidean metric $d(x, y) = |x - y|$.
+
+\begin{definition}
+Let $x \in \mathbb{R}$ and $\epsilon > 0$. The $\epsilon$-neighborhood of $x$ is the open interval $V_\epsilon(x) = (x - \epsilon, x + \epsilon)$. A set $U \subset \mathbb{R}$ is \textbf{open} if for every $x \in U$, there exists an $\epsilon > 0$ such that $V_\epsilon(x) \subset U$. A set $F \subset \mathbb{R}$ is \textbf{closed} if its complement $F^c = \mathbb{R} \setminus F$ is open.
+\end{definition}
+
+\begin{definition}
+A point $x \in \mathbb{R}$ is a \textbf{limit point} of a set $A \subset \mathbb{R}$ if every neighborhood $V_\epsilon(x)$ intersects $A$ at a point distinct from $x$. That is, $(V_\epsilon(x) \setminus \{x\}) \cap A \neq \emptyset$ for all $\epsilon > 0$.
+\end{definition}
+
+\begin{theorem}
+A set $F \subset \mathbb{R}$ is closed if and only if it contains all its limit points.
+\end{theorem}
+
+\begin{proof}
+Suppose $F$ is closed, and let $x$ be a limit point of $F$. We proceed by contradiction. If $x \notin F$, then $x \in F^c$. Because $F^c$ is open by definition, there exists $\epsilon > 0$ such that $V_\epsilon(x) \subset F^c$. This implies $V_\epsilon(x) \cap F = \emptyset$, which contradicts the premise that $x$ is a limit point of $F$. Therefore, $x \in F$.
+
+Conversely, suppose $F$ contains all its limit points. We must show that $F^c$ is open. Let $y \in F^c$. Since $y \notin F$, $y$ is not a limit point of $F$. By definition, there exists an $\epsilon > 0$ such that $V_\epsilon(y)$ contains no points of $F$ other than possibly $y$ itself. But $y \notin F$, so $V_\epsilon(y) \cap F = \emptyset$. This means $V_\epsilon(y) \subset F^c$. Since this holds for all $y \in F^c$, $F^c$ is open, and thus $F$ is closed.
+\end{proof}
+
+\begin{definition}
+An \textbf{open cover} for a set $E \subset \mathbb{R}$ is a collection of open sets $\{G_\alpha\}_{\alpha \in A}$ such that $E \subset \bigcup_{\alpha \in A} G_\alpha$. A set $K \subset \mathbb{R}$ is \textbf{compact} if every open cover of $K$ contains a finite subcover.
+\end{definition}
+
+\begin{theorem}[Heine-Borel Theorem]
+A subset $K \subset \mathbb{R}$ is compact if and only if it is closed and bounded.
+\end{theorem}
+
+\begin{proof}
+$(\implies)$ Assume $K$ is compact. We first show $K$ is bounded. Consider the open cover consisting of intervals $I_n = (-n, n)$ for all $n \in \mathbb{N}$. Since $K \subset \bigcup_{n=1}^\infty I_n$, compactness guarantees a finite subcover $\{I_{n_1}, I_{n_2}, \dots, I_{n_k}\}$. Let $N = \max\{n_1, \dots, n_k\}$. Then $K \subset (-N, N)$, meaning $K$ is bounded.
+
+Next, we show $K$ is closed by proving $K^c$ is open. Let $p \in K^c$. For each $q \in K$, choose disjoint open neighborhoods $U_q$ of $p$ and $V_q$ of $q$; explicitly, one may take $\epsilon = \frac{|p-q|}{2}$ and let $U_q = V_\epsilon(p)$ and $V_q = V_\epsilon(q)$. The collection $\{V_q\}_{q \in K}$ is an open cover of $K$. By compactness, there exists a finite subcover $\{V_{q_1}, \dots, V_{q_m}\}$. Let $W = \bigcap_{i=1}^m U_{q_i}$. As a finite intersection of open sets, $W$ is open. Furthermore, $p \in W$, and $W \cap V_{q_i} = \emptyset$ for all $i = 1, \dots, m$. Because $\{V_{q_i}\}$ covers $K$, it follows that $W \cap K = \emptyset$. Thus, $W \subset K^c$, proving $K^c$ is open and $K$ is closed.
+
+$(\impliedby)$ Assume $K$ is closed and bounded. Because $K$ is bounded, $K \subset [a, b]$ for some real numbers $a < b$. We first prove $[a, b]$ is compact. Let $\{G_\alpha\}_{\alpha \in A}$ be an open cover of $[a, b]$. Define the set $S$ as:
+\[
+S = \{ x \in [a, b] \mid \text{the interval } [a, x] \text{ is covered by a finite subcollection of } \{G_\alpha\} \}
+\]
+Since $a \in [a, b]$, there is some $G_{\alpha_0}$ containing $a$, meaning $[a, a]$ is finitely covered. Thus $a \in S$, and $S \neq \emptyset$. Furthermore, $S$ is bounded above by $b$. By the Completeness Axiom established in Section 1.1, $S$ possesses a supremum $c = \sup S$, where $a \le c \le b$.
+
+Since $c \in [a, b]$, $c \in G_\beta$ for some $\beta \in A$. Because $G_\beta$ is open, there exists $\epsilon > 0$ such that $(c - \epsilon, c + \epsilon) \subset G_\beta$. By the definition of the supremum, there exists $x \in S$ such that $c - \epsilon < x \le c$. Because $x \in S$, $[a, x]$ is covered by a finite subcollection $\mathcal{F} \subset \{G_\alpha\}$. The augmented collection $\mathcal{F} \cup \{G_\beta\}$ is finite and covers $[a, c + \frac{\epsilon}{2})$. If $c < b$, this implies $c + \frac{\epsilon}{2} \in S$, contradicting $c = \sup S$. Hence, $c = b$, and by the same logic, $b \in S$. Therefore, $[a, b]$ is finitely covered, making it compact.
+
+Finally, let $\{U_\lambda\}_{\lambda \in \Lambda}$ be an open cover of $K$. Since $K$ is closed, $K^c$ is open. The collection $\{U_\lambda\}_{\lambda \in \Lambda} \cup \{K^c\}$ forms an open cover of the compact set $[a, b]$. This extended cover admits a finite subcover $\Phi$. Removing $K^c$ from $\Phi$ leaves a finite subcollection of $\{U_\lambda\}$ that still fully covers $K$. Thus, $K$ is compact.
+\end{proof}
