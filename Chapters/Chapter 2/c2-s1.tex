@@ -1,0 +1,123 @@
+\section{Proof-Based Calculus \& Integration}
+
+\subsection{The Mean Value Theorem and Rigorous Generalizations}
+
+The transition from the topological foundations of $\mathbb{R}$ to differential calculus requires establishing the relationship between the local behavior of a function's derivative and its global variations over an interval. The cornerstone of this bridge is the Mean Value Theorem, which relies essentially on the topological compactness of closed intervals. 
+
+Before proving the Mean Value Theorem, we first establish Rolle's Theorem, which itself depends on the Extreme Value Theorem (a direct consequence of the Heine-Borel theorem established in Chapter 1).
+
+\begin{lemma}[Fermat's Theorem on Stationary Points]
+Let $f: (a, b) \to \mathbb{R}$ be a function. If $f$ attains a local maximum or local minimum at a point $c \in (a, b)$, and if $f$ is differentiable at $c$, then $f'(c) = 0$.
+\end{lemma}
+
+\begin{proof}
+Assume $f$ attains a local maximum at $c$. By definition, there exists an $\epsilon > 0$ such that for all $x \in (c - \epsilon, c + \epsilon)$, $f(x) \le f(c)$. 
+For $x \in (c, c + \epsilon)$, $x - c > 0$ and $f(x) - f(c) \le 0$, yielding a difference quotient $\frac{f(x) - f(c)}{x - c} \le 0$. Taking the right-hand limit as $x \to c^+$, we find $f'(c) \le 0$.
+Conversely, for $x \in (c - \epsilon, c)$, $x - c < 0$ and $f(x) - f(c) \le 0$, yielding $\frac{f(x) - f(c)}{x - c} \ge 0$. Taking the left-hand limit as $x \to c^-$, we find $f'(c) \ge 0$.
+Since $f$ is differentiable at $c$, the left and right limits must coincide, forcing $f'(c) = 0$. The proof for a local minimum proceeds symmetrically.
+\end{proof}
+
+\begin{theorem}[Rolle's Theorem]
+Let $f: [a, b] \to \mathbb{R}$ be continuous on the closed interval $[a, b]$ and differentiable on the open interval $(a, b)$. If $f(a) = f(b)$, then there exists at least one point $c \in (a, b)$ such that $f'(c) = 0$.
+\end{theorem}
+
+\begin{proof}
+Because $[a, b]$ is compact and $f$ is continuous, the Extreme Value Theorem guarantees that $f$ attains its global maximum $M$ and global minimum $m$ on $[a, b]$. 
+If $M = m$, then $f(x)$ is constant on $[a, b]$. Consequently, $f'(x) = 0$ for all $x \in (a, b)$, and any $c \in (a, b)$ satisfies the theorem.
+If $M > m$, then since $f(a) = f(b)$, $f$ must attain at least one of its extrema at a point $c$ in the open interval $(a, b)$. By Fermat's Theorem, because $f$ is differentiable at this interior extremum, $f'(c) = 0$.
+\end{proof}
+
+\begin{theorem}[Lagrange Mean Value Theorem]
+Let $f: [a, b] \to \mathbb{R}$ be continuous on $[a, b]$ and differentiable on $(a, b)$. There exists $c \in (a, b)$ such that:
+\[
+f'(c) = \frac{f(b) - f(a)}{b - a}
+\]
+\end{theorem}
+
+\begin{proof}
+We construct an auxiliary function $g: [a, b] \to \mathbb{R}$ representing the difference between $f(x)$ and the secant line passing through $(a, f(a))$ and $(b, f(b))$:
+\[
+g(x) = f(x) - f(a) - \frac{f(b) - f(a)}{b - a}(x - a)
+\]
+Since $f(x)$ and polynomials are continuous on $[a, b]$ and differentiable on $(a, b)$, $g(x)$ shares these properties. Evaluating $g$ at the endpoints yields:
+\[
+g(a) = f(a) - f(a) - 0 = 0
+\]
+\[
+g(b) = f(b) - f(a) - (f(b) - f(a)) = 0
+\]
+Since $g(a) = g(b) = 0$, $g$ satisfies the hypotheses of Rolle's Theorem. Thus, there exists a point $c \in (a, b)$ such that $g'(c) = 0$. Differentiating $g(x)$ gives:
+\[
+g'(x) = f'(x) - \frac{f(b) - f(a)}{b - a}
+\]
+Setting $g'(c) = 0$ implies $f'(c) = \frac{f(b) - f(a)}{b - a}$, completing the proof.
+\end{proof}
+
+\begin{theorem}[Cauchy's Mean Value Theorem]
+Let $f, g: [a, b] \to \mathbb{R}$ be continuous on $[a, b]$ and differentiable on $(a, b)$. There exists $c \in (a, b)$ such that:
+\[
+(f(b) - f(a))g'(c) = (g(b) - g(a))f'(c)
+\]
+\end{theorem}
+
+\begin{proof}
+Define the auxiliary function $h: [a, b] \to \mathbb{R}$ as follows:
+\[
+h(x) = (f(b) - f(a))g(x) - (g(b) - g(a))f(x)
+\]
+The function $h$ is continuous on $[a, b]$ and differentiable on $(a, b)$ due to the respective properties of $f$ and $g$. Evaluating $h$ at the endpoints:
+\[
+h(a) = f(b)g(a) - f(a)g(a) - g(b)f(a) + g(a)f(a) = f(b)g(a) - g(b)f(a)
+\]
+\[
+h(b) = f(b)g(b) - f(a)g(b) - g(b)f(b) + g(a)f(b) = g(a)f(b) - f(a)g(b)
+\]
+Thus, $h(a) = h(b)$. By Rolle's Theorem, there exists $c \in (a, b)$ such that $h'(c) = 0$. Differentiating $h$ yields:
+\[
+h'(x) = (f(b) - f(a))g'(x) - (g(b) - g(a))f'(x)
+\]
+Setting $h'(c) = 0$ directly produces $(f(b) - f(a))g'(c) = (g(b) - g(a))f'(c)$.
+\end{proof}
+
+A powerful generalization of the Mean Value Theorem arises when analyzing higher-order derivatives, leading to Taylor's Theorem, which quantifies the error in polynomial approximations of functions.
+
+\begin{theorem}[Taylor's Theorem with Lagrange Remainder]
+Let $f: [a, b] \to \mathbb{R}$ be a function such that $f$ and its first $n$ derivatives are continuous on $[a, b]$, and $f^{(n+1)}$ exists on $(a, b)$. Let $x_0 \in [a, b]$. For any $x \in [a, b]$ with $x \neq x_0$, there exists a point $c$ strictly between $x$ and $x_0$ such that:
+\[
+f(x) = \sum_{k=0}^n \frac{f^{(k)}(x_0)}{k!}(x - x_0)^k + \frac{f^{(n+1)}(c)}{(n+1)!}(x - x_0)^{n+1}
+\]
+\end{theorem}
+
+\begin{proof}
+Fix $x \in [a, b]$. We define a real number $M$ such that the following equation holds:
+\[
+f(x) = \sum_{k=0}^n \frac{f^{(k)}(x_0)}{k!}(x - x_0)^k + M(x - x_0)^{n+1}
+\]
+Our goal is to show that $M = \frac{f^{(n+1)}(c)}{(n+1)!}$ for some $c$ between $x_0$ and $x$. To this end, define a function $F(t)$ on the closed interval bounded by $x_0$ and $x$:
+\[
+F(t) = f(x) - \sum_{k=0}^n \frac{f^{(k)}(t)}{k!}(x - t)^k - M(x - t)^{n+1}
+\]
+By construction, $F(x) = f(x) - f(x) - 0 = 0$, and by our definition of $M$, $F(x_0) = 0$. Since $F$ satisfies the conditions of Rolle's Theorem, there exists a point $c$ strictly between $x_0$ and $x$ such that $F'(c) = 0$. 
+
+We compute the derivative of $F(t)$ with respect to $t$. The summation expands as a telescoping series when differentiated using the product rule:
+\[
+\frac{d}{dt} \left( \frac{f^{(k)}(t)}{k!}(x - t)^k \right) = \frac{f^{(k+1)}(t)}{k!}(x - t)^k - \frac{f^{(k)}(t)}{(k-1)!}(x - t)^{k-1}
+\]
+Summing this from $k=0$ to $n$, all terms cancel except the final one:
+\[
+\frac{d}{dt} \sum_{k=0}^n \frac{f^{(k)}(t)}{k!}(x - t)^k = \frac{f^{(n+1)}(t)}{n!}(x - t)^n
+\]
+Thus, the derivative of $F(t)$ simplifies to:
+\[
+F'(t) = - \frac{f^{(n+1)}(t)}{n!}(x - t)^n + M(n+1)(x - t)^n
+\]
+Evaluating at $t = c$ and setting $F'(c) = 0$ yields:
+\[
+0 = (x - c)^n \left( M(n+1) - \frac{f^{(n+1)}(c)}{n!} \right)
+\]
+Since $c \neq x$, $(x - c)^n \neq 0$, which mandates:
+\[
+M(n+1) = \frac{f^{(n+1)}(c)}{n!} \implies M = \frac{f^{(n+1)}(c)}{(n+1)!}
+\]
+Substituting this value of $M$ back into the original equation for $f(x)$ completes the proof.
+\end{proof}
