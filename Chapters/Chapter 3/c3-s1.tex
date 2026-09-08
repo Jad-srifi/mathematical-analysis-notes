@@ -1,0 +1,84 @@
+\section{Linear Algebra \& Spectral Theory}
+
+\subsection{Vector Spaces, Linear Maps, and the Rank-Nullity Theorem}
+
+We shift our theoretical focus to the algebraic structures underlying vector spaces, providing the formal framework necessary for spectral theory. Let $F$ denote an arbitrary field, which in the context of this portfolio will typically be $\mathbb{R}$ or $\mathbb{C}$.
+
+\begin{definition}
+A \textbf{vector space} $V$ over a field $F$ is a set equipped with two operations: vector addition $+ : V \times V \to V$ and scalar multiplication $\cdot : F \times V \to V$. These operations must satisfy commutativity and associativity of addition, the existence of an additive identity $0_V$ and additive inverses, the existence of a multiplicative identity $1 \in F$, and distributivity of scalar multiplication over vector and scalar addition.
+\end{definition}
+
+\begin{definition}
+Let $V$ and $W$ be vector spaces over the same field $F$. A function $T: V \to W$ is a \textbf{linear map} if for all $u, v \in V$ and all $c \in F$:
+\[
+T(u + v) = T(u) + T(v) \quad \text{and} \quad T(cu) = cT(u)
+\]
+\end{definition}
+
+Associated with any linear map $T: V \to W$ are two fundamental subsets that dictate its injectivity and surjectivity.
+
+\begin{definition}
+The \textbf{kernel} (or null space) of $T$ is $\ker(T) = \{ v \in V \mid T(v) = 0_W \}$. The \textbf{image} (or range) of $T$ is $\operatorname{im}(T) = \{ T(v) \in W \mid v \in V \}$.
+\end{definition}
+
+\begin{lemma}
+For any linear map $T: V \to W$, $\ker(T)$ is a subspace of $V$, and $\operatorname{im}(T)$ is a subspace of $W$.
+\end{lemma}
+
+\begin{proof}
+We first prove $\ker(T)$ is a subspace. By linearity, $T(0_V) = T(0_V + 0_V) = T(0_V) + T(0_V)$, which forces $T(0_V) = 0_W$. Thus, $0_V \in \ker(T)$, making it non-empty. Let $u, v \in \ker(T)$ and $c \in F$. By linearity, $T(u + v) = T(u) + T(v) = 0_W + 0_W = 0_W$, and $T(cu) = cT(u) = c(0_W) = 0_W$. Because it is closed under vector addition and scalar multiplication, $\ker(T)$ is a subspace of $V$.
+
+Next, we prove $\operatorname{im}(T)$ is a subspace. Since $T(0_V) = 0_W$, $0_W \in \operatorname{im}(T)$. Let $w_1, w_2 \in \operatorname{im}(T)$ and $c \in F$. By definition, there exist $v_1, v_2 \in V$ such that $T(v_1) = w_1$ and $T(v_2) = w_2$. Because $V$ is a vector space, $v_1 + v_2 \in V$ and $cv_1 \in V$. Applying $T$ yields $T(v_1 + v_2) = T(v_1) + T(v_2) = w_1 + w_2$, and $T(cv_1) = cT(v_1) = cw_1$. Thus, $\operatorname{im}(T)$ is closed under addition and scalar multiplication, constituting a subspace of $W$.
+\end{proof}
+
+\begin{theorem}[Rank-Nullity Theorem]
+Let $V$ and $W$ be vector spaces over $F$, and let $V$ be finite-dimensional. If $T: V \to W$ is a linear map, then:
+\[
+\dim(\ker(T)) + \dim(\operatorname{im}(T)) = \dim(V)
+\]
+\end{theorem}
+
+\begin{proof}
+Let $\dim(V) = n$ and let $k = \dim(\ker(T))$. Since $\ker(T)$ is a subspace of the finite-dimensional vector space $V$, it is finite-dimensional, and $0 \le k \le n$. Let $\{u_1, u_2, \dots, u_k\}$ be a basis for $\ker(T)$. 
+    
+By the Basis Extension Theorem, any linearly independent set in a finite-dimensional vector space can be extended to a basis for the entire space. Therefore, we can append $r = n - k$ vectors $\{v_1, v_2, \dots, v_r\}$ such that the combined set:
+\[
+\mathcal{B} = \{u_1, \dots, u_k, v_1, \dots, v_r\}
+\]
+forms a basis for $V$. To prove the theorem, it suffices to show that the set $\mathcal{C} = \{T(v_1), T(v_2), \dots, T(v_r)\}$ forms a basis for $\operatorname{im}(T)$, which requires proving that $\mathcal{C}$ both spans $\operatorname{im}(T)$ and is linearly independent.
+
+First, we establish that $\mathcal{C}$ spans $\operatorname{im}(T)$. Let $w \in \operatorname{im}(T)$. By definition, there exists $x \in V$ such that $T(x) = w$. Because $\mathcal{B}$ is a basis for $V$, we express $x$ uniquely as a linear combination:
+\[
+x = \sum_{i=1}^k a_i u_i + \sum_{j=1}^r b_j v_j
+\]
+for scalars $a_i, b_j \in F$. Applying the linear map $T$ yields:
+\[
+w = T(x) = T\left(\sum_{i=1}^k a_i u_i + \sum_{j=1}^r b_j v_j\right) = \sum_{i=1}^k a_i T(u_i) + \sum_{j=1}^r b_j T(v_j)
+\]
+Because $u_i \in \ker(T)$ for all $1 \le i \le k$, $T(u_i) = 0_W$. The sum truncates to:
+\[
+w = \sum_{j=1}^r b_j T(v_j)
+\]
+This demonstrates that any $w \in \operatorname{im}(T)$ can be written as a linear combination of vectors in $\mathcal{C}$, meaning $\operatorname{span}(\mathcal{C}) = \operatorname{im}(T)$.
+
+Second, we prove that $\mathcal{C}$ is linearly independent. Suppose there exist scalars $c_1, \dots, c_r \in F$ such that:
+\[
+\sum_{j=1}^r c_j T(v_j) = 0_W
+\]
+By the linearity of $T$, we consolidate the left-hand side:
+\[
+T\left(\sum_{j=1}^r c_j v_j\right) = 0_W
+\]
+This implies that the vector $y = \sum_{j=1}^r c_j v_j$ lies in $\ker(T)$. Because $\{u_1, \dots, u_k\}$ is a basis for $\ker(T)$, $y$ must be expressible as a linear combination of the $u_i$ basis vectors:
+\[
+\sum_{j=1}^r c_j v_j = \sum_{i=1}^k d_i u_i \implies \sum_{i=1}^k d_i u_i - \sum_{j=1}^r c_j v_j = 0_V
+\]
+The set $\mathcal{B} = \{u_1, \dots, u_k, v_1, \dots, v_r\}$ is a basis for $V$, meaning it is strictly linearly independent. The only solution to this linear combination evaluating to the zero vector is the trivial solution. Thus, $c_j = 0$ for all $1 \le j \le r$.
+    
+Because the only solution to $\sum_{j=1}^r c_j T(v_j) = 0_W$ is the trivial one, the set $\mathcal{C}$ is linearly independent. Since $\mathcal{C}$ is a linearly independent spanning set of size $r$, it is a basis for $\operatorname{im}(T)$. Therefore, $\dim(\operatorname{im}(T)) = r$. 
+
+Summing the dimensions concludes the proof:
+\[
+\dim(\ker(T)) + \dim(\operatorname{im}(T)) = k + r = k + (n - k) = n = \dim(V)
+\]
+\end{proof}
