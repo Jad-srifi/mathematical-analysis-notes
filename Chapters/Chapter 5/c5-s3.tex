@@ -1,0 +1,56 @@
+\subsection{Power Series, Laurent Series, and the Residue Theorem}
+
+While Cauchy's Integral Formula provides an exact representation of a holomorphic function within a simply connected domain, many profound applications of complex analysis involve functions with isolated non-analytic points. To analyze these singularities, we extend the local Taylor series representation to the Laurent series, which accommodates negative powers of the complex variable.
+
+\begin{theorem}[Laurent's Theorem]
+Let $f$ be holomorphic in the open annulus $A = \{z \in \mathbb{C} \mid r < |z - z_0| < R\}$, where $0 \le r < R \le \infty$. Then $f(z)$ can be uniquely represented by a uniformly convergent series on any closed sub-annulus of $A$:
+$$f(z) = \sum_{n=-\infty}^\infty c_n (z - z_0)^n$$
+where the coefficients are given by:
+$$c_n = \frac{1}{2\pi i} \oint_\gamma \frac{f(w)}{(w - z_0)^{n+1}} \, dw$$
+for any simple closed contour $\gamma$ lying in $A$ and enclosing the inner boundary $r$, oriented counterclockwise.
+\end{theorem}
+
+The series naturally decomposes into two parts: the analytic part $\sum_{n=0}^\infty c_n (z - z_0)^n$, which converges for $|z - z_0| < R$, and the principal part $\sum_{n=1}^\infty c_{-n} (z - z_0)^{-n}$, which converges for $|z - z_0| > r$. The behavior of the principal part provides a rigorous classification of isolated singularities.
+
+\begin{definition}
+Let $f$ have an isolated singularity at $z_0$, and let $\sum_{n=-\infty}^\infty c_n (z - z_0)^n$ be its Laurent expansion in the punctured disk $0 < |z - z_0| < R$. 
+\begin{enumerate}
+    \item If $c_n = 0$ for all $n < 0$, the singularity is \textbf{removable}. The function can be extended holomorphically to $z_0$ by setting $f(z_0) = c_0$.
+    \item If $c_{-m} \neq 0$ for some integer $m > 0$ and $c_n = 0$ for all $n < -m$, the singularity is a \textbf{pole of order $m$}. 
+    \item If $c_n \neq 0$ for infinitely many negative values of $n$, the singularity is an \textbf{essential singularity}.
+\end{enumerate}
+\end{definition}
+
+The coefficient $c_{-1}$ is of paramount importance. Termed the \textbf{residue} of $f$ at $z_0$ and denoted $\operatorname{Res}(f, z_0)$, it is the sole term of the Laurent series that yields a non-zero integral when integrated over a closed loop enclosing $z_0$, because $\oint_\gamma (z - z_0)^n \, dz = 0$ for all integers $n \neq -1$, and equals $2\pi i$ for $n = -1$.
+
+\begin{theorem}[Cauchy's Residue Theorem]
+Let $\Omega \subset \mathbb{C}$ be a simply connected open set. Let $\gamma$ be a simple closed contour in $\Omega$, oriented counterclockwise, and let $f$ be holomorphic on $\Omega$ except for a finite number of isolated singularities $z_1, z_2, \dots, z_k$ located strictly in the interior of $\gamma$. Then:
+$$\oint_\gamma f(z) \, dz = 2\pi i \sum_{j=1}^k \operatorname{Res}(f, z_j)$$
+\end{theorem}
+
+\begin{proof}
+By the principle of contour deformation (generalized Cauchy Integral Theorem for multiply connected domains), we construct small, non-overlapping circles $\gamma_j$ centered at each singularity $z_j$, with each $\gamma_j$ oriented counterclockwise and contained entirely within the interior of $\gamma$. The region bounded by $\gamma$ and the reversed circles $-\gamma_j$ contains no singularities of $f$. Thus, by Cauchy's Integral Theorem:
+$$\oint_\gamma f(z) \, dz + \sum_{j=1}^k \oint_{-\gamma_j} f(z) \, dz = 0 \implies \oint_\gamma f(z) \, dz = \sum_{j=1}^k \oint_{\gamma_j} f(z) \, dz$$
+For each $j$, the integral over the local circle $\gamma_j$ isolates the residue at $z_j$. By expanding $f(z)$ into its Laurent series around $z_j$, we find:
+$$\oint_{\gamma_j} f(z) \, dz = \oint_{\gamma_j} \sum_{n=-\infty}^\infty c_{n,j} (z - z_j)^n \, dz = c_{-1,j} (2\pi i) = 2\pi i \operatorname{Res}(f, z_j)$$
+Substituting this into the contour sum completes the proof.
+\end{proof}
+
+The Residue Theorem provides a powerful analytic mechanism for evaluating purely real integrals, particularly improper integrals over the entire real line, bypassing the need for explicit antiderivatives.
+
+\textbf{Application: Evaluating a Real Improper Integral}
+Evaluate the real integral $I = \int_{-\infty}^\infty \frac{1}{x^2 + a^2} \, dx$ for $a > 0$.
+
+We complexify the integrand, defining $f(z) = \frac{1}{z^2 + a^2}$. The function $f$ has isolated singularities where $z^2 + a^2 = 0$, which factors as $(z - ia)(z + ia) = 0$. These are simple poles at $z = ia$ and $z = -ia$. We define a closed semicircular contour $\Gamma = [-R, R] \cup C_R$, where $[-R, R]$ is the segment on the real axis and $C_R$ is the upper semicircle of radius $R > a$ centered at the origin, traversed counterclockwise.
+
+The only singularity of $f$ enclosed by $\Gamma$ is the simple pole at $z = ia$ in the upper half-plane. We compute the residue at $z = ia$:
+$$\operatorname{Res}(f, ia) = \lim_{z \to ia} (z - ia) \frac{1}{(z - ia)(z + ia)} = \lim_{z \to ia} \frac{1}{z + ia} = \frac{1}{2ia}$$
+By the Residue Theorem, the contour integral evaluates to:
+$$\oint_\Gamma f(z) \, dz = 2\pi i \operatorname{Res}(f, ia) = 2\pi i \left( \frac{1}{2ia} \right) = \frac{\pi}{a}$$
+We decompose the contour integral into its linear and arc components:
+$$\oint_\Gamma f(z) \, dz = \int_{-R}^R \frac{1}{x^2 + a^2} \, dx + \int_{C_R} \frac{1}{z^2 + a^2} \, dz$$
+We bound the integral over the arc $C_R$ using the estimation lemma (ML-inequality). For $z \in C_R$, $|z| = R$. By the reverse triangle inequality, $|z^2 + a^2| \ge |z|^2 - a^2 = R^2 - a^2$. The length of $C_R$ is $\pi R$. Thus:
+$$\left| \int_{C_R} \frac{1}{z^2 + a^2} \, dz \right| \le \frac{1}{R^2 - a^2} (\pi R)$$
+As $R \to \infty$, this bound tends strictly to $0$. Taking the limit as $R \to \infty$ of the decomposed contour integral yields:
+$$\frac{\pi}{a} = \lim_{R \to \infty} \int_{-R}^R \frac{1}{x^2 + a^2} \, dx + 0 = \int_{-\infty}^\infty \frac{1}{x^2 + a^2} \, dx$$
+Thus, the improper integral converges to $\frac{\pi}{a}$, demonstrating the indispensable utility of analytic continuation and contour deformation in evaluating real-variable phenomena.

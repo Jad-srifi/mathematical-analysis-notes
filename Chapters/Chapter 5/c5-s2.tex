@@ -1,0 +1,70 @@
+\subsection{Cauchy's Integral Theorem, Cauchy's Integral Formula, Morera's Theorem, and Liouville's Theorem}
+
+The geometric rigidity of holomorphic functions allows for a profound connection between complex contour integration and the values of a function entirely strictly within a domain. 
+
+\begin{theorem}[Cauchy's Integral Theorem]
+Let $\Omega \subset \mathbb{C}$ be a simply connected open set, and let $f: \Omega \to \mathbb{C}$ be a holomorphic function. If $\gamma$ is a piecewise smooth, simple closed contour contained entirely within $\Omega$, then:
+$$ \oint_\gamma f(z) \, dz = 0 $$
+\end{theorem}
+
+\begin{proof}
+We present the classical proof under the assumption that $f'(z)$ is continuous, which permits the use of Green's Theorem (Goursat later demonstrated that the theorem holds without assuming continuous partial derivatives). Let $f(z) = u(x, y) + i v(x, y)$ and let $dz = dx + i dy$. We separate the contour integral into real and imaginary line integrals:
+$$ \oint_\gamma f(z) \, dz = \oint_\gamma (u + iv)(dx + i dy) = \oint_\gamma (u \, dx - v \, dy) + i \oint_\gamma (v \, dx + u \, dy) $$
+Because $\Omega$ is simply connected and $\gamma$ is a simple closed contour, $\gamma$ bounds a simply connected region $D \subset \Omega$. We apply Green's Theorem to both real line integrals:
+$$ \oint_\gamma (u \, dx - v \, dy) = \iint_D \left( -\frac{\partial v}{\partial x} - \frac{\partial u}{\partial y} \right) dx \, dy $$
+$$ \oint_\gamma (v \, dx + u \, dy) = \iint_D \left( \frac{\partial u}{\partial x} - \frac{\partial v}{\partial y} \right) dx \, dy $$
+Because $f$ is holomorphic on $\Omega$, it satisfies the Cauchy-Riemann equations: $\frac{\partial u}{\partial x} = \frac{\partial v}{\partial y}$ and $\frac{\partial u}{\partial y} = -\frac{\partial v}{\partial x}$. Substituting these into the double integrals yields integrands of identically zero:
+$$ \iint_D (0) \, dx \, dy + i \iint_D (0) \, dx \, dy = 0 $$
+Thus, $\oint_\gamma f(z) \, dz = 0$.
+\end{proof}
+
+\begin{theorem}[Cauchy's Integral Formula]
+Let $f$ be holomorphic on a simply connected open set $\Omega$, and let $\gamma$ be a simple closed contour in $\Omega$ oriented counterclockwise. For any point $z_0$ strictly in the interior of $\gamma$:
+$$ f(z_0) = \frac{1}{2\pi i} \oint_\gamma \frac{f(z)}{z - z_0} \, dz $$
+\end{theorem}
+
+\begin{proof}
+Because $\Omega$ is open and $z_0$ lies in the interior of $\gamma$, there exists an $\epsilon > 0$ such that the closed disk $\overline{D_\epsilon(z_0)} = \{ z \in \mathbb{C} \mid |z - z_0| \le \epsilon \}$ is entirely contained within the interior of $\gamma$. Let $C_\epsilon$ denote the boundary circle of this disk, parametrized by $z(\theta) = z_0 + \epsilon e^{i\theta}$ for $0 \le \theta \le 2\pi$, oriented counterclockwise.
+
+The function $g(z) = \frac{f(z)}{z - z_0}$ is holomorphic everywhere in $\Omega$ except at $z_0$. By the principle of contour deformation (a corollary of Cauchy's Integral Theorem on multiply connected domains), the integral over $\gamma$ equals the integral over $C_\epsilon$:
+$$ \oint_\gamma \frac{f(z)}{z - z_0} \, dz = \oint_{C_\epsilon} \frac{f(z)}{z - z_0} \, dz $$
+We rewrite the integrand by adding and subtracting $f(z_0)$:
+$$ \oint_{C_\epsilon} \frac{f(z)}{z - z_0} \, dz = \oint_{C_\epsilon} \frac{f(z_0)}{z - z_0} \, dz + \oint_{C_\epsilon} \frac{f(z) - f(z_0)}{z - z_0} \, dz $$
+We evaluate the first integral by direct parametrization ($dz = i \epsilon e^{i\theta} d\theta$):
+$$ \oint_{C_\epsilon} \frac{f(z_0)}{z - z_0} \, dz = f(z_0) \int_0^{2\pi} \frac{i \epsilon e^{i\theta}}{\epsilon e^{i\theta}} \, d\theta = f(z_0) \int_0^{2\pi} i \, d\theta = 2\pi i f(z_0) $$
+For the second integral, because $f$ is holomorphic, it is continuous at $z_0$. For any $\eta > 0$, we can choose $\epsilon$ sufficiently small such that $|f(z) - f(z_0)| < \eta$ for all $z \in C_\epsilon$. We bound the second integral using the standard estimation lemma (ML-inequality):
+$$ \left| \oint_{C_\epsilon} \frac{f(z) - f(z_0)}{z - z_0} \, dz \right| \le \max_{z \in C_\epsilon} \left| \frac{f(z) - f(z_0)}{z - z_0} \right| \cdot \text{length}(C_\epsilon) < \frac{\eta}{\epsilon} (2\pi \epsilon) = 2\pi \eta $$
+Because the original integral over $\gamma$ is independent of $\epsilon$, and $\eta$ can be made arbitrarily small by shrinking $\epsilon$, the second integral must be exactly $0$. Therefore:
+$$ \oint_\gamma \frac{f(z)}{z - z_0} \, dz = 2\pi i f(z_0) + 0 $$
+Dividing by $2\pi i$ yields the result.
+\end{proof}
+
+\begin{theorem}[Liouville's Theorem]
+If $f: \mathbb{C} \to \mathbb{C}$ is an entire function (holomorphic on all of $\mathbb{C}$) and is bounded, then $f$ is constant.
+\end{theorem}
+
+\begin{proof}
+Because $f$ is bounded, there exists a real number $M > 0$ such that $|f(z)| \le M$ for all $z \in \mathbb{C}$. Fix an arbitrary point $z_0 \in \mathbb{C}$. By differentiating Cauchy's Integral Formula with respect to $z_0$, we obtain an integral representation for the derivative:
+$$ f'(z_0) = \frac{1}{2\pi i} \oint_{C_R} \frac{f(z)}{(z - z_0)^2} \, dz $$
+where $C_R$ is a circle of radius $R > 0$ centered at $z_0$. We apply the estimation lemma to bound the magnitude of the derivative:
+$$ |f'(z_0)| \le \frac{1}{2\pi} \max_{z \in C_R} \left| \frac{f(z)}{(z - z_0)^2} \right| \cdot \text{length}(C_R) $$
+Since $|f(z)| \le M$ and $|z - z_0| = R$ on the contour $C_R$, this yields:
+$$ |f'(z_0)| \le \frac{1}{2\pi} \frac{M}{R^2} (2\pi R) = \frac{M}{R} $$
+Because $f$ is entire, this inequality holds for any arbitrarily large radius $R$. Taking the limit as $R \to \infty$, we find $|f'(z_0)| \le 0$, forcing $f'(z_0) = 0$. Since $z_0$ was chosen arbitrarily, $f'(z) = 0$ for all $z \in \mathbb{C}$. A function with a strictly zero derivative on a connected domain is constant.
+\end{proof}
+
+\begin{theorem}[Morera's Theorem]
+Let $\Omega \subset \mathbb{C}$ be an open set. If $f: \Omega \to \mathbb{C}$ is continuous and satisfies $\oint_\gamma f(z) \, dz = 0$ for every closed piecewise smooth curve $\gamma$ in $\Omega$, then $f$ is holomorphic on $\Omega$.
+\end{theorem}
+
+\begin{proof}
+Because the integral of $f$ over any closed loop is zero, the integral between any two points is path-independent. Fix $z_0 \in \Omega$ and define a function $F: \Omega \to \mathbb{C}$ by:
+$$ F(z) = \int_{z_0}^z f(w) \, dw $$
+This function is well-defined due to path independence. We compute the derivative of $F$ directly from the definition:
+$$ \lim_{h \to 0} \frac{F(z + h) - F(z)}{h} = \lim_{h \to 0} \frac{1}{h} \int_z^{z+h} f(w) \, dw $$
+Because $f$ is continuous at $z$, we can write $f(w) = f(z) + (f(w) - f(z))$. Substituting this into the integral:
+$$ \frac{1}{h} \int_z^{z+h} [f(z) + (f(w) - f(z))] \, dw = f(z) + \frac{1}{h} \int_z^{z+h} (f(w) - f(z)) \, dw $$
+As $h \to 0$, $w$ approaches $z$. By the continuity of $f$, for any $\epsilon > 0$, there exists $\delta > 0$ such that $|w - z| < \delta \implies |f(w) - f(z)| < \epsilon$. For $|h| < \delta$, the error term is bounded by:
+$$ \left| \frac{1}{h} \int_z^{z+h} (f(w) - f(z)) \, dw \right| \le \frac{1}{|h|} \cdot \epsilon \cdot |h| = \epsilon $$
+Thus, the limit evaluates exactly to $f(z)$, proving that $F'(z) = f(z)$. Therefore, $F$ is a holomorphic function on $\Omega. $ A profound corollary of Cauchy's Integral Formula is that the derivative of a holomorphic function is itself holomorphic (analytic functions are infinitely differentiable). Since $f = F'$, $f$ must also be holomorphic.
+\end{proof}
