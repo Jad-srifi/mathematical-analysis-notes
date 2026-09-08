@@ -1,0 +1,77 @@
+\subsection{Eigenvalues, Eigenvectors, and the Spectral Theorem for Symmetric/Hermitian Matrices}
+
+To understand the intrinsic geometric behavior of a linear operator $T: V \to V$, we isolate the specific directions in $V$ that are strictly scaled by $T$, invariant in their span. We assume $V$ is a finite-dimensional inner product space over the field $F$ (where $F$ is either $\mathbb{R}$ or $\mathbb{C}$), equipped with an inner product $\langle \cdot, \cdot \rangle$.
+
+\begin{definition}
+Let $T: V \to V$ be a linear operator. A scalar $\lambda \in F$ is an \textbf{eigenvalue} of $T$ if there exists a non-zero vector $v \in V$ such that $T(v) = \lambda v$. The vector $v$ is called an \textbf{eigenvector} corresponding to $\lambda$.
+\end{definition}
+
+\begin{definition}
+The \textbf{adjoint} of a linear operator $T \in \mathcal{L}(V)$, denoted $T^*$, is the unique linear operator on $V$ such that $\langle T(u), v \rangle = \langle u, T^*(v) \rangle$ for all $u, v \in V$. An operator $T$ is \textbf{self-adjoint} (or Hermitian) if $T = T^*$. In the context of real matrix representations, this is equivalent to a symmetric matrix ($A = A^T$).
+\end{definition}
+
+The structure of self-adjoint operators is remarkably rigid. We first prove two foundational lemmas regarding their spectra.
+
+\begin{lemma}[Real Spectrum of Self-Adjoint Operators]
+If $T: V \to V$ is a self-adjoint operator, then all eigenvalues of $T$ are strictly real.
+\end{lemma}
+
+\begin{proof}
+Let $\lambda \in \mathbb{C}$ be an eigenvalue of $T$, and let $v \in V$ be a corresponding non-zero eigenvector. We evaluate the inner product $\langle T(v), v \rangle$ in two distinct ways. On one hand, applying the eigenvalue definition directly yields:
+\[
+\langle T(v), v \rangle = \langle \lambda v, v \rangle = \lambda \langle v, v \rangle
+\]
+On the other hand, utilizing the self-adjoint property $T = T^*$:
+\[
+\langle T(v), v \rangle = \langle v, T^*(v) \rangle = \langle v, T(v) \rangle = \langle v, \lambda v \rangle = \overline{\lambda} \langle v, v \rangle
+\]
+Equating the two results gives $\lambda \langle v, v \rangle = \overline{\lambda} \langle v, v \rangle$. Since $v$ is a non-zero eigenvector, $\langle v, v \rangle = \|v\|^2 \neq 0$. Dividing by $\|v\|^2$ yields $\lambda = \overline{\lambda}$, proving that $\lambda \in \mathbb{R}$.
+\end{proof}
+
+\begin{lemma}[Orthogonality of Eigenspaces]
+Let $T: V \to V$ be a self-adjoint operator. If $\lambda_1$ and $\lambda_2$ are distinct eigenvalues of $T$, then their corresponding eigenvectors $v_1$ and $v_2$ are orthogonal.
+\end{lemma}
+
+\begin{proof}
+Suppose $T(v_1) = \lambda_1 v_1$ and $T(v_2) = \lambda_2 v_2$, with $\lambda_1 \neq \lambda_2$. We evaluate the inner product $\langle T(v_1), v_2 \rangle$:
+\[
+\langle T(v_1), v_2 \rangle = \langle \lambda_1 v_1, v_2 \rangle = \lambda_1 \langle v_1, v_2 \rangle
+\]
+Alternatively, utilizing the adjoint property and the fact that eigenvalues of $T$ are real (hence $\overline{\lambda_2} = \lambda_2$):
+\[
+\langle T(v_1), v_2 \rangle = \langle v_1, T^*(v_2) \rangle = \langle v_1, T(v_2) \rangle = \langle v_1, \lambda_2 v_2 \rangle = \lambda_2 \langle v_1, v_2 \rangle
+\]
+Equating these expansions gives $\lambda_1 \langle v_1, v_2 \rangle = \lambda_2 \langle v_1, v_2 \rangle$, which rearranges to:
+\[
+(\lambda_1 - \lambda_2) \langle v_1, v_2 \rangle = 0
+\]
+Because $\lambda_1 \neq \lambda_2$, we must have $\langle v_1, v_2 \rangle = 0$, proving that $v_1$ and $v_2$ are orthogonal.
+\end{proof}
+
+We are now equipped to prove the central result of finite-dimensional spectral theory, which demonstrates that self-adjoint operators can be completely decoupled into independent orthogonal 1-dimensional projections.
+
+\begin{theorem}[Spectral Theorem for Finite-Dimensional Spaces]
+Let $V$ be a finite-dimensional inner product space over $F$, and let $T \in \mathcal{L}(V)$ be a self-adjoint operator. Then $V$ admits an orthonormal basis consisting entirely of eigenvectors of $T$.
+\end{theorem}
+
+\begin{proof}
+We proceed by mathematical induction on $n = \dim(V)$. 
+
+\textbf{Base Case:} If $n = 1$, any non-zero vector $v \in V$ is an eigenvector of $T$. Normalizing $v$ by setting $e_1 = \frac{v}{\|v\|}$ provides the required orthonormal basis. The theorem trivially holds.
+
+\textbf{Inductive Step:} Assume the theorem is true for all inner product spaces of dimension $n - 1$. Let $\dim(V) = n$. By the Fundamental Theorem of Algebra, the characteristic polynomial of $T$ possesses at least one root over $\mathbb{C}$. Because $T$ is self-adjoint, Lemma 3.2.1 guarantees this root is real, ensuring $T$ has at least one real eigenvalue $\lambda_1$ and a corresponding non-zero eigenvector $v_1$. We normalize this vector to obtain a unit eigenvector $e_1 = \frac{v_1}{\|v_1\|}$.
+
+Define $W = \operatorname{span}(e_1)^\perp = \{ u \in V \mid \langle u, e_1 \rangle = 0 \}$. Since $\dim(V) = n$ and $\dim(\operatorname{span}(e_1)) = 1$, standard properties of orthogonal complements dictate that $\dim(W) = n - 1$. 
+
+We claim that $W$ is invariant under $T$ (i.e., $T(W) \subset W$). Let $w \in W$. We must show that $T(w) \in W$, which requires $\langle T(w), e_1 \rangle = 0$. Using the self-adjointness of $T$ and the fact that $T(e_1) = \lambda_1 e_1$:
+\[
+\langle T(w), e_1 \rangle = \langle w, T^*(e_1) \rangle = \langle w, T(e_1) \rangle = \langle w, \lambda_1 e_1 \rangle = \lambda_1 \langle w, e_1 \rangle
+\]
+Because $w \in W = \operatorname{span}(e_1)^\perp$, $\langle w, e_1 \rangle = 0$. Thus, $\langle T(w), e_1 \rangle = 0$, proving $T(w) \in W$. Therefore, the restriction of $T$ to $W$, denoted $T|_W : W \to W$, is a well-defined linear operator.
+
+Furthermore, $T|_W$ inherits self-adjointness from $T$. For any $x, y \in W$, $\langle T|_W(x), y \rangle = \langle T(x), y \rangle = \langle x, T(y) \rangle = \langle x, T|_W(y) \rangle$. 
+
+Because $T|_W$ is a self-adjoint operator on the $(n-1)$-dimensional inner product space $W$, the inductive hypothesis applies. There exists an orthonormal basis $\{e_2, e_3, \dots, e_n\}$ for $W$ consisting of eigenvectors of $T|_W$ (and consequently, eigenvectors of $T$).
+
+We construct the set $\mathcal{B} = \{e_1, e_2, \dots, e_n\}$. Since $e_1$ is orthogonal to every vector in $W$, and $\{e_2, \dots, e_n\}$ is an orthonormal set in $W$, $\mathcal{B}$ forms an orthonormal set of $n$ vectors in the $n$-dimensional space $V$. Thus, $\mathcal{B}$ is an orthonormal basis for $V$ composed entirely of eigenvectors of $T$, completing the induction.
+\end{proof}

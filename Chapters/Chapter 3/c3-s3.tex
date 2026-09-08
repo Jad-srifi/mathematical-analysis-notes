@@ -1,0 +1,49 @@
+\subsection{Singular Value Decomposition (SVD) and Geometric Projections}
+
+While the Spectral Theorem strictly applies to self-adjoint operators on a single vector space, the Singular Value Decomposition (SVD) generalizes this geometric decoupling to arbitrary linear maps between vector spaces of potentially different dimensions. 
+
+Let $V$ and $W$ be finite-dimensional inner product spaces over $F$ (where $F$ is $\mathbb{R}$ or $\mathbb{C}$). Consider a linear map $T: V \to W$. Its adjoint $T^*: W \to V$ is uniquely defined by the relation $\langle T(v), w \rangle_W = \langle v, T^*(w) \rangle_V$ for all $v \in V$ and $w \in W$.
+
+\begin{lemma}
+The composite operator $T^*T: V \to V$ is self-adjoint and positive semi-definite. Consequently, its eigenvalues are real and non-negative.
+\end{lemma}
+
+\begin{proof}
+To prove self-adjointness, we take the adjoint of the composition. By the properties of adjoints, $(T^*T)^* = T^*(T^*)^* = T^*T$. Thus, $T^*T$ is self-adjoint.
+
+To prove it is positive semi-definite, let $v \in V$. We evaluate the inner product:
+$$ \langle T^*T(v), v \rangle_V = \langle T(v), T(v) \rangle_W = \|T(v)\|_W^2 $$
+By the axioms of norms, $\|T(v)\|_W^2 \ge 0$. If $\lambda$ is an eigenvalue of $T^*T$ with corresponding unit eigenvector $v$, then $T^*T(v) = \lambda v$, which implies:
+$$ \lambda = \lambda \langle v, v \rangle_V = \langle \lambda v, v \rangle_V = \langle T^*T(v), v \rangle_V = \|T(v)\|_W^2 \ge 0 $$
+Thus, all eigenvalues of $T^*T$ are real and non-negative.
+\end{proof}
+
+\begin{definition}
+Let $\lambda_1 \ge \lambda_2 \ge \dots \ge \lambda_n \ge 0$ be the eigenvalues of $T^*T$, counted with multiplicity. The \textbf{singular values} of $T$, denoted $\sigma_i$, are the non-negative square roots of these eigenvalues: $\sigma_i = \sqrt{\lambda_i}$.
+\end{definition}
+
+\begin{theorem}[Singular Value Decomposition]
+Let $T: V \to W$ be a linear map with rank $r$. There exist orthonormal bases $\{v_1, \dots, v_n\}$ of $V$ and $\{u_1, \dots, u_m\}$ of $W$, and strictly positive singular values $\sigma_1 \ge \dots \ge \sigma_r > 0$, such that for all $v \in V$:
+$$ T(v) = \sum_{i=1}^r \sigma_i \langle v, v_i \rangle_V u_i $$
+\end{theorem}
+
+\begin{proof}
+Because $T^*T$ is a self-adjoint operator on the finite-dimensional space $V$, the Spectral Theorem (Theorem 3.2.3) guarantees the existence of an orthonormal basis $\{v_1, \dots, v_n\}$ of $V$ consisting of eigenvectors of $T^*T$. Order these eigenvectors such that their corresponding eigenvalues satisfy $\lambda_1 \ge \dots \ge \lambda_r > 0$ and $\lambda_{r+1} = \dots = \lambda_n = 0$. The singular values are $\sigma_i = \sqrt{\lambda_i}$.
+
+For $1 \le i \le r$, define vectors $u_i \in W$ by:
+$$ u_i = \frac{1}{\sigma_i} T(v_i) $$
+We first demonstrate that the set $\{u_1, \dots, u_r\}$ is orthonormal in $W$. For any $1 \le i, j \le r$, we compute the inner product:
+$$ \langle u_i, u_j \rangle_W = \left\langle \frac{1}{\sigma_i} T(v_i), \frac{1}{\sigma_j} T(v_j) \right\rangle_W = \frac{1}{\sigma_i \sigma_j} \langle T^*T(v_i), v_j \rangle_V $$
+Since $v_i$ is an eigenvector of $T^*T$ with eigenvalue $\lambda_i = \sigma_i^2$, this becomes:
+$$ \langle u_i, u_j \rangle_W = \frac{\sigma_i^2}{\sigma_i \sigma_j} \langle v_i, v_j \rangle_V $$
+Because $\{v_1, \dots, v_n\}$ is an orthonormal basis, $\langle v_i, v_j \rangle_V = \delta_{ij}$ (the Kronecker delta). Thus, $\langle u_i, u_j \rangle_W = \delta_{ij}$, proving $\{u_1, \dots, u_r\}$ is an orthonormal set. We can extend this set to a full orthonormal basis $\{u_1, \dots, u_m\}$ for $W$ using the Gram-Schmidt process.
+
+To verify the decomposition, let $v \in V$. We express $v$ in terms of the orthonormal basis of $V$:
+$$ v = \sum_{i=1}^n \langle v, v_i \rangle_V v_i $$
+Applying the linear map $T$ yields:
+$$ T(v) = \sum_{i=1}^n \langle v, v_i \rangle_V T(v_i) $$
+For $i > r$, $\lambda_i = 0$, which implies $\|T(v_i)\|_W^2 = \langle T^*T(v_i), v_i \rangle_V = 0$, forcing $T(v_i) = 0_W$. Therefore, the sum truncates at $r$. Substituting $T(v_i) = \sigma_i u_i$ for $1 \le i \le r$ gives the desired representation:
+$$ T(v) = \sum_{i=1}^r \sigma_i \langle v, v_i \rangle_V u_i $$
+\end{proof}
+
+\end{document}
