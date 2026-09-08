@@ -1,0 +1,56 @@
+\section{Complex Analysis \& Contour Integration}
+
+\subsection{Complex Differentiability, the Cauchy-Riemann Equations, and Analytic Structure}
+
+We now extend the calculus of real variables to the complex plane, $\mathbb{C}$. Identifying $\mathbb{C}$ topologically with $\mathbb{R}^2$ under the standard Euclidean metric, we analyze functions of a complex variable $z = x + iy$. The requirement of complex differentiability is vastly more rigid than its real counterpart, imposing profound structural symmetry on the component functions.
+
+\begin{definition}
+Let $\Omega \subset \mathbb{C}$ be an open set, and let $f: \Omega \to \mathbb{C}$ be a complex-valued function. The function $f$ is \textbf{complex differentiable} at a point $z_0 \in \Omega$ if the following limit exists:
+\[
+f'(z_0) = \lim_{h \to 0} \frac{f(z_0 + h) - f(z_0)}{h}
+\]
+where $h \in \mathbb{C}$ approaches $0$ along any arbitrary path in the complex plane. If $f$ is complex differentiable at every point in an open set $\Omega$, it is said to be \textbf{holomorphic} (or analytic) on $\Omega$.
+\end{definition}
+
+To understand the geometric severity of this definition, we decompose $f$ into its real and imaginary parts: $f(z) = f(x + iy) = u(x, y) + i v(x, y)$, where $u$ and $v$ are real-valued functions of two real variables. 
+
+\begin{theorem}[The Cauchy-Riemann Equations - Necessity]
+If $f(z) = u(x, y) + i v(x, y)$ is complex differentiable at $z_0 = x_0 + i y_0$, then the first-order partial derivatives of $u$ and $v$ exist at $(x_0, y_0)$ and satisfy the Cauchy-Riemann equations:
+\[
+\frac{\partial u}{\partial x} = \frac{\partial v}{\partial y} \quad \text{and} \quad \frac{\partial u}{\partial y} = -\frac{\partial v}{\partial x}
+\]
+\end{theorem}
+
+\begin{proof}
+Assume $f'(z_0)$ exists. We evaluate the limit along two orthogonal trajectories. 
+    
+First, let $h$ approach $0$ along the real axis. We write $h = \Delta x + i0$, where $\Delta x \in \mathbb{R}$ and $\Delta x \to 0$. The difference quotient becomes:
+\[
+f'(z_0) = \lim_{\Delta x \to 0} \frac{u(x_0 + \Delta x, y_0) + i v(x_0 + \Delta x, y_0) - (u(x_0, y_0) + i v(x_0, y_0))}{\Delta x}
+\]
+Separating the real and imaginary components, we obtain the standard real partial derivatives with respect to $x$:
+\[
+f'(z_0) = \lim_{\Delta x \to 0} \frac{u(x_0 + \Delta x, y_0) - u(x_0, y_0)}{\Delta x} + i \lim_{\Delta x \to 0} \frac{v(x_0 + \Delta x, y_0) - v(x_0, y_0)}{\Delta x} = \frac{\partial u}{\partial x} + i \frac{\partial v}{\partial x}
+\]
+    
+Second, let $h$ approach $0$ along the imaginary axis. We write $h = 0 + i\Delta y$, where $\Delta y \in \mathbb{R}$ and $\Delta y \to 0$. The difference quotient evaluates to:
+\[
+f'(z_0) = \lim_{\Delta y \to 0} \frac{u(x_0, y_0 + \Delta y) + i v(x_0, y_0 + \Delta y) - (u(x_0, y_0) + i v(x_0, y_0))}{i \Delta y}
+\]
+Because $\frac{1}{i} = -i$, we factor the imaginary unit to the numerator and separate the components:
+\[
+f'(z_0) = \lim_{\Delta y \to 0} \frac{v(x_0, y_0 + \Delta y) - v(x_0, y_0)}{\Delta y} - i \lim_{\Delta y \to 0} \frac{u(x_0, y_0 + \Delta y) - u(x_0, y_0)}{\Delta y} = \frac{\partial v}{\partial y} - i \frac{\partial u}{\partial y}
+\]
+    
+Because $f$ is complex differentiable at $z_0$, the limit must be strictly path-independent. Equating the real and imaginary parts of the two orthogonal limit evaluations yields:
+\[
+\frac{\partial u}{\partial x} = \frac{\partial v}{\partial y} \quad \text{and} \quad \frac{\partial v}{\partial x} = -\frac{\partial u}{\partial y}
+\]
+This proves the necessity of the Cauchy-Riemann equations.
+\end{proof}
+
+\begin{theorem}[Sufficient Conditions for Holomorphy]
+Let $f(z) = u(x, y) + i v(x, y)$ be defined on an open set $\Omega \subset \mathbb{C}$. If the first-order partial derivatives of $u$ and $v$ exist, are continuous on $\Omega$, and satisfy the Cauchy-Riemann equations, then $f$ is holomorphic on $\Omega$.
+\end{theorem}
+
+The proof of sufficiency relies heavily on the total differentiability of mappings in $\mathbb{R}^2$, leveraging the continuity of the partial derivatives to bound the linear approximation error via the standard Euclidean metric. A profoundly non-trivial consequence of these equations is that any holomorphic function is infinitely differentiable, a fact we will establish via contour integration.
